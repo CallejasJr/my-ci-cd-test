@@ -7,6 +7,10 @@ jobs:
         - image: circleci/python:3.7
       steps:
         - run:
+            name: descargando git
+            command: |
+              sudo apt install git
+        - run:
             name: Run install and activate virtual env
             command: |
               pip install virtualenv
