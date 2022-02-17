@@ -5,15 +5,16 @@ jobs:
   test:
       docker:
           image: python:3.7
-      - run:
-          name: Run tests
-          command: |
-            pip install virtualenv
-	          virtualenv .venv
-	          source .venv/bin/activate
-            pip install pytest
-            pytest test
-          no_output_timeout: 1h
+      steps:
+        - run:
+            name: Run tests
+            command: |
+              pip install virtualenv
+              virtualenv .venv
+              source .venv/bin/activate
+              pip install pytest
+              pytest test
+            no_output_timeout: 1h
 # Orchestrate our job run sequence
 workflows:
   build_and_test:
