@@ -2,27 +2,20 @@ version: 2.1
 
 # Define the jobs we want to run for this project
 jobs:
-  working_directory: ~/my-ci-cd-test
   test:
       docker:
-          image: cimg/python:3.10.1
-      steps:
-          - attach_workspace:
-              at: .
-          - checkout
-          - run: sudo chown -R circleci:circleci /usr/local/bin
-          - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
-          - restore_cache:  # ensure this step occurs *before* installing dependencies
-              key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-          - run:
-                name: Instalar pytest
-                command: |
-                    sudo pip install pytest
-          - run: 
-                name: test 
-                command: pytest 
+          image: python:3.7
+      - run:
+          name: Run tests
+          command: |
+            pip install virtualenv
+	          virtualenv .venv
+	          source .venv/bin/activate
+            pip install pytest
+            pytest test
+          no_output_timeout: 1h
 # Orchestrate our job run sequence
 workflows:
   build_and_test:
     jobs:
-      - build
+      - test
