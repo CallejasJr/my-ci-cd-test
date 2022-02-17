@@ -13,7 +13,7 @@ jobs:
         - run: 
             name: clonando repositorio
             comman: |
-              git clone https://github.com/CallejasJr/my-ci-cd-test.git
+              sudo git clone https://github.com/CallejasJr/my-ci-cd-test.git
         - run:
             name: Run install and activate virtual env
             command: |
