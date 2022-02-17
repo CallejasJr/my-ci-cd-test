@@ -6,12 +6,10 @@ jobs:
     executor: python/default
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
-      - python/install-packages:
-          args: pytest
-          pkg-manager: pip
-          pypi-cache: false
+      - run:
+          command: |
+            pip install pytest
+          name: instalando pytest
       - run:
           command: |
             pytest 
