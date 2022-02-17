@@ -1,42 +1,19 @@
-version: 2.1
-
-# Define the jobs we want to run for this project
+version: '2.1'
+orbs:
+  python: circleci/python@1.0.0
 jobs:
-  test:
-      docker:
-        - image: circleci/python:3.7
-      steps:
-        - run:
-            name: descargando git
-            command: |
-              sudo apt install git
-        - run: 
-            name: clonando repositorio
-            comman: |
-              sudo git clone https://github.com/CallejasJr/my-ci-cd-test.git
-        - run:
-            name: Run install and activate virtual env
-            command: |
-              pip install virtualenv
-              virtualenv .venv
-              source .venv/bin/activate
-            no_output_timeout: 1h
-        - run:
-            name: instalar pytest
-            command: |
-              pip install pytest
-        - run:
-            name: listando directorio
-            command: |
-              ls
-        - run:
-            name: correr test
-            command: |
-              pytest
-          
-# Orchestrate our job run sequence
+  build:
+    executor: python/default
+    steps:
+      - checkout
+      - python/install-packages:
+          args: pytest
+          pkg-manager: pipenv
+      - run:
+          command: |
+            pipenv run pytest --version
+          name: Test it
 workflows:
-  version: 2
-  build_and_test:
+  main:
     jobs:
-      - test
+      - build
