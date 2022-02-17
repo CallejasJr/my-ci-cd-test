@@ -7,13 +7,13 @@ jobs:
       - image: ubuntu-2004:202010-01
     steps:
       - checkout
-      - run: echo "this is the build job"
+      - run: echo "this is the build job from Mario"
   test:
     machine:
       - image: ubuntu-2004:202010-01
     steps:
       - checkout
-      - run: echo "this is the test job"
+      - run: echo "this is the test job from Mario"
 
 # Orchestrate our job run sequence
 workflows:
