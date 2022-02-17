@@ -7,15 +7,25 @@ jobs:
         - image: python:3.7
       steps:
         - run:
-            name: Run tests
+            name: Run install and activate virtual env
             command: |
               pip install virtualenv
               virtualenv .venv
               source .venv/bin/activate
-              pip install pytest
-              ls
-              pytest test/
             no_output_timeout: 1h
+        - run:
+            name: instalar pytest
+            command: |
+              pip install pytest
+        - run:
+            name: listando directorio
+            command: |
+              ls
+        - run:
+            name: correr test
+            command: |
+              pytest
+          
 # Orchestrate our job run sequence
 workflows:
   version: 2
