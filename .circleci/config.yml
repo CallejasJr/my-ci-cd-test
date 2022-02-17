@@ -1,6 +1,6 @@
 version: '2.1'
 orbs:
-  python: circleci/python@1.0.0
+  python: circleci/python@1.1.0
 jobs:
   build:
     executor: python/default
@@ -8,11 +8,12 @@ jobs:
       - checkout
       - python/install-packages:
           args: pytest
-          pkg-manager: pipenv
+          pkg-manager: pip
+          pypi-cache: false
       - run:
           command: |
-            pipenv run pytest --version
-          name: Test it
+            pytest 
+          name: Test
 workflows:
   main:
     jobs:
