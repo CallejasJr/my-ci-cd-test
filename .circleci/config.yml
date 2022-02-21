@@ -34,6 +34,10 @@ jobs:
           gcloud-service-key: GOOGLE_CLOUD_KEYS
           google-project-id: GOOGLE_PROJECT_ID
           google-compute-zone: GOOGLE_COMPUTE_ZONE
+      - run:
+          name: listar buckets
+          commad: |
+           echo 'gcloud alpha storage ls'
 workflows:
   main:
     jobs:
