@@ -36,7 +36,7 @@ jobs:
           google-compute-zone: GOOGLE_COMPUTE_ZONE
       - run:
           name: listar buckets
-          commad: |
+          command: |
             echo 'gcloud alpha storage ls'
 workflows:
   main:
