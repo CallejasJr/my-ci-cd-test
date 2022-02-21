@@ -50,7 +50,7 @@ jobs:
       - run:
           name: subiendo archivo .sql
           command: |
-            gcloud alpha storage cp files/myquery.sql gs://circleci-test-treinta/script-sql/myquery.sql
+            gcloud alpha storage cp files/myquery.sql gs://circleci-test-treinta/TALENT/script-sql/myquery.sql
 workflows:
   main:
     jobs:
