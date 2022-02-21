@@ -1,8 +1,9 @@
 version: '2.1'
 orbs:
   python: circleci/python@1.1.0
+  gcp-cli: circleci/gcp-cli@2.1.0
 jobs:
-  build:
+  test:
     executor: python/default
     steps:
       - checkout
@@ -14,6 +15,33 @@ jobs:
           command: |
             pytest 
           name: Test
+  deploy:
+    docker:
+      - image: circleci/python:3.7.4
+    steps:
+      - checkout
+      - run:
+          name: Credentials
+          command: |
+            echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV
+            echo ${GCP_PROJECT_KEY} | base64 --decode --ignore-garbage > $HOME/gcloud-service-key.json
+            echo 'export GOOGLE_CLOUD_KEYS=$(cat $HOME/gcloud-service-key.json)' >> $BASH_ENV
+            echo 'export TAG=${CIRCLE_SHA1}' >> $BASH_ENV
+      - gcp-cli/install_and_initialize_cli:
+          executor: gcp-cli/default
+          gcloud-service-key: GOOGLE_CLOUD_KEYS
+          google-project-id: GOOGLE_PROJECT_ID
+          google-compute-zone: GOOGLE_COMPUTE_ZONE
+      - gcp-gcr/push-image:
+          google-project-id: GOOGLE_PROJECT_ID
+          registry-url: "us.gcr.io"
+          image: $IMAGE_NAME
+      - cloudrun/deploy:
+          platform: "managed"
+          image: "us.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME"
+          service-name: "orb-gcp-cloud-run"
+          region: $GOOGLE_COMPUTE_ZONE
+          unauthenticated: true
 workflows:
   main:
     jobs:

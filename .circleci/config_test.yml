@@ -1,0 +1,20 @@
+version: '2.1'
+orbs:
+  python: circleci/python@1.1.0
+jobs:
+  build:
+    executor: python/default
+    steps:
+      - checkout
+      - run:
+          command: |
+            pip install pytest
+          name: instalando pytest
+      - run:
+          command: |
+            pytest 
+          name: Test
+workflows:
+  main:
+    jobs:
+      - build
