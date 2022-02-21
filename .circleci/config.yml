@@ -28,21 +28,15 @@ jobs:
             echo 'export GOOGLE_CLOUD_KEYS=$(cat $HOME/gcloud-service-key.json)' >> $BASH_ENV
             echo 'export TAG=${CIRCLE_SHA1}' >> $BASH_ENV
       - gcp-cli/install_and_initialize_cli:
+          name: instalando e iniciando gcp cli
           executor: gcp-cli/default
           gcloud-service-key: GOOGLE_CLOUD_KEYS
           google-project-id: GOOGLE_PROJECT_ID
           google-compute-zone: GOOGLE_COMPUTE_ZONE
-      - gcp-gcr/push-image:
-          google-project-id: GOOGLE_PROJECT_ID
-          registry-url: "us.gcr.io"
-          image: $IMAGE_NAME
-      - cloudrun/deploy:
-          platform: "managed"
-          image: "us.gcr.io/$GOOGLE_PROJECT_ID/$IMAGE_NAME"
-          service-name: "orb-gcp-cloud-run"
-          region: $GOOGLE_COMPUTE_ZONE
-          unauthenticated: true
 workflows:
   main:
     jobs:
-      - build
+      - test
+      - deploy:
+        requires:
+          -test
