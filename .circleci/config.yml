@@ -35,10 +35,14 @@ jobs:
           google-project-id: GOOGLE_PROJECT_ID
           google-compute-zone: GOOGLE_COMPUTE_ZONE
       - run:
-          name: listar buckets
+          name: listar archivos de circleci-test-treinta
           command: |
             gcloud version 
             gcloud alpha storage ls gs://circleci-test-treinta
+      - run:
+          name: subiendo main.py
+          command: |
+            gcloud alpha storage cp src/main.py gs://circleci-test-treinta/main.py
 workflows:
   main:
     jobs:
