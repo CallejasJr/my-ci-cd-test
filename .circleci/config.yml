@@ -2,6 +2,7 @@ version: '2.1'
 orbs:
   python: circleci/python@1.1.0
   gcp-cli: circleci/gcp-cli@2.1.0
+
 jobs:
   test:
     executor: python/default
@@ -27,7 +28,9 @@ jobs:
             echo ${GCP_PROJECT_KEY} | base64 --decode --ignore-garbage > $HOME/gcloud-service-key.json
             echo 'export GOOGLE_CLOUD_KEYS=$(cat $HOME/gcloud-service-key.json)' >> $BASH_ENV
             echo 'export TAG=${CIRCLE_SHA1}' >> $BASH_ENV
-      - gcp-cli/install_and_initialize_cli:
+      - gcp-cli/install:
+          version: 283.0.0
+      - gcp-cli/initialize:
           name: instalando e iniciando gcp cli
           executor: gcp-cli/default
           gcloud-service-key: GOOGLE_CLOUD_KEYS
