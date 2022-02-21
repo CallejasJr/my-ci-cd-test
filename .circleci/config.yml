@@ -55,6 +55,6 @@ workflows:
   main:
     jobs:
       #- test
-      - deploy:
+      - deploy
       #    requires:
       #      - test
