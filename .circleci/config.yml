@@ -37,8 +37,8 @@ jobs:
       - run:
           name: listar buckets
           command: |
-            echo gcloud version
-            echo gcloud alpha storage ls
+            gcloud version
+            gcloud alpha storage ls
 workflows:
   main:
     jobs:
