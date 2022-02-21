@@ -10,6 +10,10 @@ jobs:
       - checkout
       - run:
           command: |
+            pip install -r config/requirements.txt
+          name: instalando requerimientos
+      - run:
+          command: |
             pip install pytest
           name: instalando pytest
       - run:
@@ -40,9 +44,13 @@ jobs:
             gcloud version 
             gcloud alpha storage ls gs://circleci-test-treinta
       - run:
-          name: subiendo main.py
+          name: subiendo archivo .py
           command: |
-            gcloud alpha storage cp src/main.py gs://circleci-test-treinta/main.py
+            gcloud alpha storage cp src/main.py gs://circleci-test-treinta/TALENT/main.py
+      - run:
+          name: subiendo archivo .sql
+          command: |
+            gcloud alpha storage cp files/myquery.sql gs://circleci-test-treinta/script-sql/myquery.sql
 workflows:
   main:
     jobs:
