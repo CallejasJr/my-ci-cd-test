@@ -37,7 +37,7 @@ jobs:
       - run:
           name: listar buckets
           command: |
-            gcloud version
+            gcloud version 
             gcloud alpha storage ls gs://circleci-test-treinta
 workflows:
   main:
@@ -46,4 +46,3 @@ workflows:
       - deploy:
           requires:
             - test
-
