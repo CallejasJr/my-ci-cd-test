@@ -29,7 +29,7 @@ jobs:
             echo 'export GOOGLE_CLOUD_KEYS=$(cat $HOME/gcloud-service-key.json)' >> $BASH_ENV
             echo 'export TAG=${CIRCLE_SHA1}' >> $BASH_ENV
       - gcp-cli/install:
-          version: 283.0.0
+          version: 372.0.0
       - gcp-cli/initialize:
           gcloud-service-key: GOOGLE_CLOUD_KEYS
           google-project-id: GOOGLE_PROJECT_ID
@@ -37,7 +37,8 @@ jobs:
       - run:
           name: listar buckets
           command: |
-            gcloud alpha storage ls
+            echo gcloud version
+            echo gcloud alpha storage ls
 workflows:
   main:
     jobs:
